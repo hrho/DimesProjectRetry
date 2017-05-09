@@ -140,13 +140,17 @@ class GameOver(pygame.sprite.Sprite):
 	def __init__(self, gs = None):
 		self.gs = gs
 	def display(self, winner):
-		self.gs.screen.fill((0,0,0))
+	#	self.gs.screen.fill((0,0,0))
 		# player 1 winna
 		if winner == 2:
 			lt = pygame.font.Font('freesansbold.ttf', 30)
+                        bg = pygame.image.load("images/win.jpg")
+                        self.gs.screen.blit(bg, (0,0))
 			TextS = lt.render("YOU ARE THE NBA CHAMPION", True, (255, 255, 255))
 		elif winner == 1:
 			lt = pygame.font.Font('freesansbold.ttf', 30)
+                        bg = pygame.image.load("images/lose.jpg")
+                        self.gs.screen.blit(bg, (0,0))
 			TextS = lt.render("You blew a 3-1 lead", True, (255, 255, 255))
 		TextR = TextS.get_rect()
 		TextR.center = [320, 300]
