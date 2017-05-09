@@ -1,4 +1,4 @@
-from teams import backgrounds, chicago, jersey, warriors,wizards
+from teams import backgrounds, chicago, jersey, warriors,wizards, cavs, rockets, thunder, spurs
 
 import sys
 import pygame
@@ -16,7 +16,8 @@ from twisted.internet import reactor
 from twisted.internet.defer import DeferredQueue
 from twisted.internet.task import LoopingCall 
 
-SERVER_HOST = 'ash.campus.nd.edu'
+#SERVER_HOST = 'ash.campus.nd.edu'
+SERVER_HOST = 'newt.campus.nd.edu'
 SERVER_PORT = 40053
 
 class GameSpace:
@@ -89,7 +90,7 @@ class GameSpace:
 				self.write(zlib.compress(pickle.dumps([self.player2.mx, self.player2.my, pickle.dumps(laserListx), pickle.dumps(laserListy), pickle.dumps(laserListxm), pickle.dumps(laserListym)])))
 			self.counted = 1
 			#display game object
-                        self.bg.fill((0,0,0))
+                    #    self.bg.fill((0,0,0))
 			self.screen.blit(self.bg, (0,0))
 			self.screen.blit(self.player1.image, self.player1.rect)
 			# lasers
@@ -146,7 +147,7 @@ class GameOver(pygame.sprite.Sprite):
 			lt = pygame.font.Font('freesansbold.ttf', 30)
 			TextS = lt.render("You blew a 3-1 lead", True, (255, 255, 255))
 		TextR = TextS.get_rect()
-		TextR.center = [200, 300]
+		TextR.center = [320, 300]
 		self.gs.screen.blit(TextS, TextR)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -273,6 +274,26 @@ class ClientConnection(Protocol):
                         self.client.ready = 1
                 elif data == 'warriors':
                         self.client.team = warriors
+                        self.client.setup()
+                        self.client.ready = 1
+                
+                elif data == 'cavs':
+                        self.client.team = cavs
+                        self.client.setup()
+                        self.client.ready = 1
+
+                elif data == 'rockets':
+                        self.client.team = rockets
+                        self.client.setup()
+                        self.client.ready = 1
+
+                elif data == 'thunder':
+                        self.client.team = thunder
+                        self.client.setup()
+                        self.client.ready = 1
+
+                elif data == 'spurs':
+                        self.client.team = spurs
                         self.client.setup()
                         self.client.ready = 1
 		else:

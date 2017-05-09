@@ -1,4 +1,4 @@
-from teams import chicago, jersey, wizards, warriors
+from teams import chicago, jersey, wizards, warriors, rockets, cavs, thunder, spurs
 
 import sys
 import pygame
@@ -108,7 +108,7 @@ class GameSpace:
 			self.counted = True
 
 			#display game object
-                        self.bg.fill((0,0,0))
+                   #     self.bg.fill((0,0,0))
 			self.screen.blit(self.bg, (0,0))
 			self.screen.blit(self.player1.image, self.player1.rect)
 			# lasers
@@ -155,16 +155,28 @@ class Menu(pygame.sprite.Sprite):
 		self.jerseyButton = pygame.image.load("images/bklNets.png")
                 self.warButton = pygame.image.load("images/warriors.png")
                 self.wizButton = pygame.image.load("images/wizards.png")
+                self.thunderButton = pygame.image.load("images/thunder.png")
+                self.cavsButton = pygame.image.load("images/cavs.png")
+                self.spursButton = pygame.image.load("images/spurs.png")
+                self.rocketsButton = pygame.image.load("images/rockets.png")
 
 		self.chicagoRect = self.chicagoButton.get_rect()
 		self.jerseyRect = self.jerseyButton.get_rect()
                 self.warRect = self.warButton.get_rect()
                 self.wizRect = self.wizButton.get_rect()
+                self.thunderRect = self.thunderButton.get_rect()
+                self.cavsRect = self.cavsButton.get_rect()
+                self.spursRect = self.spursButton.get_rect()
+                self.rocketsRect = self.rocketsButton.get_rect()
 
-		self.chicagoRect.center = [200, 300]
-		self.jerseyRect.center = [400, 300]
-                self.warRect.center = [200,150]
-                self.wizRect.center = [400,150]
+		self.chicagoRect.center = [150, 300]
+		self.jerseyRect.center = [350, 300]
+                self.warRect.center = [150,150]
+                self.wizRect.center = [350,150]
+                self.cavsRect.center = [250,150]
+                self.thunderRect.center =[250,300]
+                self.spursRect.center = [450,300]
+                self.rocketsRect.center = [450,150]
 
 		self.circleCenter = None
 	def display(self):
@@ -182,13 +194,26 @@ class Menu(pygame.sprite.Sprite):
 
 		# highlight button
 		if dist(mx, my, self.chicagoRect.centerx, self.chicagoRect.centery)<25:
-			pygame.draw.circle(self.gs.screen, (255, 0, 0), [self.chicagoRect.centerx, self.chicagoRect.centery], 50, 0)
+			pygame.draw.circle(self.gs.screen, (0, 255, 0), [self.chicagoRect.centerx, self.chicagoRect.centery], 50, 0)
                 elif dist(mx, my, self.wizRect.centerx, self.wizRect.centery)<25:
-                        pygame.draw.circle(self.gs.screen, (255,0,0), [self.wizRect.centerx, self.wizRect.centery], 50, 0)
+                        pygame.draw.circle(self.gs.screen, (0,255,0), [self.wizRect.centerx, self.wizRect.centery], 50, 0)
 		elif dist(mx, my, self.jerseyRect.centerx, self.jerseyRect.centery)<25:
-			pygame.draw.circle(self.gs.screen, (255, 0, 0), [self.jerseyRect.centerx, self.jerseyRect.centery], 50, 0)
+			pygame.draw.circle(self.gs.screen, (0, 255, 0), [self.jerseyRect.centerx, self.jerseyRect.centery], 50, 0)
                 elif dist(mx,my,self.warRect.centerx, self.warRect.centery)<25:
-                        pygame.draw.circle(self.gs.screen, (255,0,0), [self.warRect.centerx, self.warRect.centery],50,0)
+                        pygame.draw.circle(self.gs.screen, (0,255,0), [self.warRect.centerx, self.warRect.centery],50,0)
+                
+                elif dist(mx,my,self.cavsRect.centerx, self.cavsRect.centery)<25:
+                        pygame.draw.circle(self.gs.screen, (0,255,0), [self.cavsRect.centerx, self.cavsRect.centery],50,0)
+                
+                elif dist(mx,my,self.thunderRect.centerx, self.thunderRect.centery)<25:
+                        pygame.draw.circle(self.gs.screen, (0,255,0), [self.thunderRect.centerx, self.thunderRect.centery],50,0)
+                
+                elif dist(mx,my,self.spursRect.centerx, self.spursRect.centery)<25:
+                        pygame.draw.circle(self.gs.screen, (0,255,0), [self.spursRect.centerx, self.spursRect.centery],50,0)
+                
+                elif dist(mx,my,self.rocketsRect.centerx, self.rocketsRect.centery)<25:
+                        pygame.draw.circle(self.gs.screen, (0,255,0), [self.rocketsRect.centerx, self.rocketsRect.centery],50,0)
+                
                 elif self.circleCenter != None:
 			pygame.draw.circle(self.gs.screen, self.color, self.circleCenter, 50, 0)
 		#display button
@@ -196,6 +221,10 @@ class Menu(pygame.sprite.Sprite):
 		self.gs.screen.blit(self.jerseyButton, self.jerseyRect)
                 self.gs.screen.blit(self.warButton, self.warRect)
                 self.gs.screen.blit(self.wizButton, self.wizRect)
+                self.gs.screen.blit(self.cavsButton, self.cavsRect)
+                self.gs.screen.blit(self.spursButton, self.spursRect)
+                self.gs.screen.blit(self.rocketsButton, self.rocketsRect)
+                self.gs.screen.blit(self.thunderButton, self.thunderRect)
 		# user click check
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -234,7 +263,38 @@ class Menu(pygame.sprite.Sprite):
                                         self.gs.setup()
                                         if self.gs.connected:
                                                 self.gs.write('warriors')
+                                
+                                elif dist(mx, my, self.cavsRect.centerx, self.cavsRect.centery) < 25:
+                                        self.circleCenter = [self.cavsRect.centerx, self.cavsRect.centery]
+                                        self.color = (255, 0, 0)
+                                        self.gs.team = cavs
+                                        self.gs.setup()
+                                        if self.gs.connected:
+                                                self.gs.write('cavs')
+                                
+                                elif dist(mx, my, self.spursRect.centerx, self.spursRect.centery) < 25:
+                                        self.circleCenter = [self.spursRect.centerx, self.spursRect.centery]
+                                        self.color = (255, 255, 255)
+                                        self.gs.team = spurs
+                                        self.gs.setup()
+                                        if self.gs.connected:
+                                                self.gs.write('spurs')
 
+                                elif dist(mx, my, self.thunderRect.centerx, self.thunderRect.centery) < 25:
+                                        self.circleCenter = [self.thunderRect.centerx, self.thunderRect.centery]
+                                        self.color = (0,0,255)
+                                        self.gs.team = thunder
+                                        self.gs.setup()
+                                        if self.gs.connected:
+                                                self.gs.write('thunder')
+
+                                elif dist(mx, my, self.rocketsRect.centerx, self.rocketsRect.centery) < 25:
+                                        self.circleCenter = [self.rocketsRect.centerx, self.rocketsRect.centery]
+                                        self.color = (255, 0, 0)
+                                        self.gs.team = rockets
+                                        self.gs.setup()
+                                        if self.gs.connected:
+                                                self.gs.write('rockets')
 # gameover boyy
 class GameOver(pygame.sprite.Sprite):
 	def __init__(self, gs = None):
@@ -249,7 +309,7 @@ class GameOver(pygame.sprite.Sprite):
 			lt = pygame.font.Font('freesansbold.ttf', 30)
 			TextS = lt.render("You blew a 3-1 lead", True, (255, 255, 255))
 		TextR = TextS.get_rect()
-		TextR.center = [200, 300]
+		TextR.center = [320, 300]
 		self.gs.screen.blit(TextS, TextR)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
