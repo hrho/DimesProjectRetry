@@ -169,6 +169,15 @@ class Dropshots(pygame.sprite.Sprite):
 		self.image = pygame.image.load("images/" + self.gs.team['ball_image'])
 		self.rect = self.image.get_rect()
 		self.rect.center = [x, y]
+
+class Dropbombs(pygame.sprite.Sprite):
+        def __init__(self, x, y,gs = None):
+                pygame.sprite.Sprite.__init__(self)
+                self.gs = gs
+                self.image = pygame.image.load("images/bomb.png")
+                self.rect = self.image.get_rect()
+                self.rect.center = [x,y]
+
 # Player 1
 class Player1(pygame.sprite.Sprite):
 	def __init__(self, gs = None):
@@ -307,10 +316,14 @@ class ClientConnection(Protocol):
 			self.client.shot.drops = []
 			shotx = pickle.loads(data[3])
 			shoty = pickle.loads(data[4])
+                        val = pickle.loads(data[6])
 			i = 0
 			for x in shotx:
-				self.client.shot.drops.append(Dropshots(x, shoty[i], self.client))
-				i += 1
+                                if val[i] == 0:
+				    self.client.shot.drops.append(Dropshots(x, shoty[i], self.client))
+                                else:
+                                    self.client.shot.drops.append(Dropbombs(x,shoty[i],self.client))
+                                i += 1
 			# p2 score
 			self.client.score2 = data[5]
 	def connectionMade(self):

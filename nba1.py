@@ -67,15 +67,21 @@ class GameSpace:
 					if collision(ball.rect.center, bullet.rect.center):
 						self.shot.drops.remove(ball)
 						self.player2.lasers.remove(bullet)
-						# 2 blocks = a point
-						if self.scoreCount % 2 == 1:
+                                                if ball.val == 0:
+                                                     # 2 blocks = a point
+						    if self.scoreCount % 2 == 1:
 							self.score2 += 1
-						self.scoreCount += 1
+						    self.scoreCount += 1
+                                                else:
+                                                    self.score2 -= 1
 						break
 			for ball in self.shot.drops:
 				if collision(ball.rect.center, [self.player1.rect.center[0] + self.team['catcher_offset'][0], self.player1.rect.center[1] + self.team['catcher_offset'][1]]):
 					self.shot.drops.remove(ball)
-					self.score1 += 1
+                                        if ball.val == 0:
+                                            self.score1 += 1
+                                        else:
+                                            self.score1 -= 1
 			# frame rate with tick
 			self.clock.tick(60)
 			# user inputs for slick controls
@@ -99,12 +105,17 @@ class GameSpace:
 				laser.tick()
 			if self.counted and self.counter%3 == 0:
 				shotx = []
+                                value = []
 				shoty = []
 				#list of shot drop to player 2
 				for drop in self.shot.drops:
 					shotx.append(drop.rect.center[0])
 					shoty.append(drop.rect.center[1])
-				self.write(zlib.compress(pickle.dumps([self.player1.rect.center, self.player1.box.rect.center, self.score1, pickle.dumps(shotx), pickle.dumps(shoty), self.score2])))
+                                        try:
+                                            value.append(drop.val)
+                                        except Exception as err:
+                                            print err
+				self.write(zlib.compress(pickle.dumps([self.player1.rect.center, self.player1.box.rect.center, self.score1, pickle.dumps(shotx), pickle.dumps(shoty), self.score2, pickle.dumps(value)])))
 			self.counted = True
 
 			#display game object
@@ -320,11 +331,20 @@ class Shot(pygame.sprite.Sprite):
 		self.gs = gs
 		self.drops = []
 		self.created = False
+                self.val = 0
 	def tick(self):
 		create = random.randint(1, 40)
 		if create == 5:
 			self.created = Dropshots(self.gs)
 			self.drops.append(self.created)
+                elif create == 10:
+                     #   print("create a bomb")
+                        self.val = 1
+                        try:
+                            self.created = DropBombs(self.gs)
+                        except Exception as err:
+                            print err
+                        self.drops.append(self.created)
 		for ball in self.drops:
 			ball.rect = ball.rect.move([0, 1])
 
@@ -332,10 +352,20 @@ class Dropshots(pygame.sprite.Sprite):
 	def __init__(self, gs = None):
 		pygame.sprite.Sprite.__init__(self)
 		self.gs = gs
-		self.image = pygame.image.load("images/" + self.gs.team['ball_image'])
+		self.image = pygame.image.load("images/bball.png")
 		self.rect = self.image.get_rect()
 		self.x = random.randint(30, 610)
 		self.rect.center = [self.x, -20]
+                self.val = 0
+class DropBombs(pygame.sprite.Sprite):
+        def __init__(self, gs = None):
+                pygame.sprite.Sprite.__init__(self)
+                self.gs = gs
+                self.image = pygame.image.load("images/bomb.png")
+                self.rect = self.image.get_rect()
+                self.x = random.randint(30,610)
+                self.rect.center = [self.x,-20]
+                self.val = 1
 # Player 1
 class Player1(pygame.sprite.Sprite):
 	def __init__(self, gs = None):
