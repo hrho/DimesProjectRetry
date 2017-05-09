@@ -54,7 +54,7 @@ class GameSpace:
 	def game_loop(self):
 		if self.gameOver == 1:
 			self.write(zlib.compress(pickle.dumps([self.player1.rect.center, self.player1.box.rect.center, self.score1, pickle.dumps([]), pickle.dumps([]), self.score2])))
-			if self.score1 >= 10:
+			if self.score1 >= 7:
 				self.endGame.display(1)
 			else:
                             self.endGame.display(2)
@@ -70,7 +70,7 @@ class GameSpace:
                                                 if ball.val == 0:
 						    self.score2 += 1
                                                 else:
-                                                    self.score2 -= 1
+                                                    self.score2 -= 2
 						break
 			for ball in self.shot.drops:
 				if collision(ball.rect.center, [self.player1.rect.center[0] + self.team['catcher_offset'][0], self.player1.rect.center[1] + self.team['catcher_offset'][1]]):
@@ -144,7 +144,7 @@ class GameSpace:
 				self.screen.blit(ball.image, ball.rect)
 			pygame.display.flip()
 			# end of kobe's game
-			if self.score1 >= 10 or self.score2 >= 10:
+			if self.score1 >= 7 or self.score2 >= 10:
 				self.gameOver = 1
                         pygame.display.update()
 		else: # waiting to connect to p2

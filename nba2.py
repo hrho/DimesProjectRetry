@@ -55,7 +55,7 @@ class GameSpace:
 		self.bg = pygame.transform.scale(self.bg, self.team['background_scale'])
 	def game_loop(self):
 		if self.gameOver == 1:
-			if self.score1 >= 10:
+			if self.score1 >= 7:
 				self.endGame.display(1)
 			else:
 				self.endGame.display(2)
@@ -120,7 +120,7 @@ class GameSpace:
 				self.screen.blit(ball.image, ball.rect)
 			pygame.display.flip()
 			# end of kobe's game
-			if self.score1 >= 10 or self.score2 >= 10:
+			if self.score1 >= 7 or self.score2 >= 10:
 				self.gameOver = 1
                         pygame.display.update()
 		else:
@@ -316,14 +316,20 @@ class ClientConnection(Protocol):
 			self.client.shot.drops = []
 			shotx = pickle.loads(data[3])
 			shoty = pickle.loads(data[4])
-                        val = pickle.loads(data[6])
-			i = 0
+                        try:
+                            val = pickle.loads(data[6])
+                        except Exception as err:
+                            pass
+                        i = 0
 			for x in shotx:
+                            try:
                                 if val[i] == 0:
 				    self.client.shot.drops.append(Dropshots(x, shoty[i], self.client))
                                 else:
                                     self.client.shot.drops.append(Dropbombs(x,shoty[i],self.client))
                                 i += 1
+                            except Exception as err:
+                                print err
 			# p2 score
 			self.client.score2 = data[5]
 	def connectionMade(self):
