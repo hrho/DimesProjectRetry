@@ -21,7 +21,7 @@ SERVER_PORT = 40053
 #hello
 class GameSpace:
 	def __init__(self):
-    	pygame.init()
+        	pygame.init()
 		self.size = self.width, self.height = 640, 480
 		self.screen = pygame.display.set_mode(self.size)
 		pygame.display.set_caption("NBA 2K18")
