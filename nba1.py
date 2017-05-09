@@ -68,10 +68,7 @@ class GameSpace:
 						self.shot.drops.remove(ball)
 						self.player2.lasers.remove(bullet)
                                                 if ball.val == 0:
-                                                     # 2 blocks = a point
-						    if self.scoreCount % 2 == 1:
-							self.score2 += 1
-						    self.scoreCount += 1
+						    self.score2 += 1
                                                 else:
                                                     self.score2 -= 1
 						break
@@ -333,7 +330,7 @@ class Shot(pygame.sprite.Sprite):
 		self.created = False
                 self.val = 0
 	def tick(self):
-		create = random.randint(1, 40)
+		create = random.randint(1, 80)
 		if create == 5:
 			self.created = Dropshots(self.gs)
 			self.drops.append(self.created)

@@ -38,7 +38,7 @@ class GameSpace:
 		self.team = None
 		# waiting bg screen
 		tempbg = backgrounds[random.randint(0,1)]
-		self.bg = pygame.image.load("images/" + tempbg['background_image'])
+		self.bg = pygame.image.load("images/kitty.jpg")
 		self.bg = pygame.transform.scale(self.bg, tempbg['background_scale'])
 		self.gameOver = 0
 	def setup(self):
@@ -78,7 +78,7 @@ class GameSpace:
 			self.tickNum += 1
 			for laser in self.player2.lasers:
 				laser.tick()
-			if self.counted == 1 and self.tickNum%3 == 0:
+			if self.counted == 1 and self.tickNum%2 == 0:
 				laserListx = []
 				laserListy = []
 				laserListxm = []
