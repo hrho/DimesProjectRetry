@@ -16,8 +16,8 @@ from twisted.internet import reactor
 from twisted.internet.defer import DeferredQueue
 from twisted.internet.task import LoopingCall 
 
-#SERVER_HOST = 'ash.campus.nd.edu'
-SERVER_HOST = 'newt.campus.nd.edu'
+SERVER_HOST = 'ash.campus.nd.edu'
+#SERVER_HOST = 'newt.campus.nd.edu'
 SERVER_PORT = 40053
 
 #hello
@@ -55,7 +55,7 @@ class GameSpace:
 		self.bg = pygame.transform.scale(self.bg, self.team['background_scale'])
 	def game_loop(self):
 		if self.gameOver == 1:
-			if self.score1 > 15:
+			if self.score1 >= 10:
 				self.endGame.display(1)
 			else:
 				self.endGame.display(2)
@@ -120,7 +120,7 @@ class GameSpace:
 				self.screen.blit(ball.image, ball.rect)
 			pygame.display.flip()
 			# end of kobe's game
-			if self.score1 > 15 or self.score2 > 15:
+			if self.score1 >= 10 or self.score2 >= 10:
 				self.gameOver = 1
                         pygame.display.update()
 		else:
@@ -192,18 +192,6 @@ class Player1(pygame.sprite.Sprite):
                 self.box = Box(self.rect.center, self.gs)
         def tick(self):
             pass
-
-# catching balls lol
-class Box(pygame.sprite.Sprite):
-	def __init__(self, center, gs = None):
-		pygame.sprite.Sprite.__init__(self)
-		self.gs = gs
-		self.image = pygame.image.load("images/" + self.gs.team['box_image'])
-		self.rect = self.image.get_rect()
-		self.x = center[0] + self.gs.team['box_offset'][0]
-		self.y = center[1] + self.gs.team['box_offset'][1]
-		self.rect.center = [self.x, self.y]
-
 # the swatter
 class Player2(pygame.sprite.Sprite):
 	def __init__(self, gs = None):
@@ -242,6 +230,16 @@ class Player2(pygame.sprite.Sprite):
 			self.image = pygame.transform.rotate(self.orig_image, self.angle)
 			self.rect = self.image.get_rect(center = self.rect.center)
 			self.toFire = 0
+# catching balls lol
+class Box(pygame.sprite.Sprite):
+	def __init__(self, center, gs = None):
+		pygame.sprite.Sprite.__init__(self)
+		self.gs = gs
+		self.image = pygame.image.load("images/" + self.gs.team['box_image'])
+		self.rect = self.image.get_rect()
+		self.x = center[0] + self.gs.team['box_offset'][0]
+		self.y = center[1] + self.gs.team['box_offset'][1]
+		self.rect.center = [self.x, self.y]
 
 class Laser(pygame.sprite.Sprite):
 	def __init__(self, xc=320, yc=240, xm=1, ym=1, gs = None):
@@ -262,7 +260,7 @@ def dist(x1, y1, x2, y2):
 
 def collision(ball_center, bullet_center):
 	distance = dist(ball_center[0], ball_center[1], bullet_center[0], bullet_center[1])
-	if distance <= 50:
+	if distance <= 30:
 		return True
 	else:
 		return False
