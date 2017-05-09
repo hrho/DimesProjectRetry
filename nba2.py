@@ -226,7 +226,7 @@ class Player2(pygame.sprite.Sprite):
 			self.fired = 1
 		else:
 		# player 2 rotates
-			self.angle = math.atan2(self.my-self.rect.center[1], self.mx - self.rect.center[0])*-180/math.pi + 211.5 - self.gs.team['angle_offset']
+			self.angle = math.atan2(self.my-self.rect.center[1], self.mx - self.rect.center[0])*-180/math.pi + 211.5
 			self.image = pygame.transform.rotate(self.orig_image, self.angle)
 			self.rect = self.image.get_rect(center = self.rect.center)
 			self.toFire = 0

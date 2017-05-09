@@ -5,15 +5,14 @@ chicago = dict([
 	("ball_image", "bball.png"),
 	("hand_location", [600, 300]),
 	('hand_image', "jordan.png"),
-	('angle_offset', 0),
 	('bullet_offset', 10),
 	('bullet_image', "tears.png"),
 	('player_start', [300, 400]),
+	('box_offset', [0, 0]),
 	('max_player_left', 50),
 	('max_player_right', 600),
-	('box_offset', [0, 0]),
+	('catcher_offset', [0, 0]),
 	('background_scale', [800, 480]),
-	('catcher_offset', [150, 0]),
 	('name', 'chicago')
 ])
 jersey = dict([
@@ -24,7 +23,6 @@ jersey = dict([
 	("ball_image", "bball.png"),
 	("hand_location", [600, 300]),
 	('hand_image', "crying_jordan.png"),
-	('angle_offset', 0),
 	('bullet_offset', 10),
 	('bullet_image', "L.png"),
 	('player_start', [300, 400]),
@@ -42,7 +40,6 @@ wizards = dict([
 	("ball_image", "bball.png"),
 	("hand_location", [600, 300]),
 	('hand_image', "jordan.png"),
-	('angle_offset', 0),
 	('bullet_offset', 10),
 	('bullet_image', "tears.png"),
 	('player_start', [300, 400]),
@@ -50,8 +47,8 @@ wizards = dict([
 	('max_player_right', 600),
 	('box_offset', [0, 0]),
 	('background_scale', [800, 480]),
-	('catcher_offset', [150, 0]),
-	('name', 'jersey')
+	('catcher_offset', [0, 0]),
+	('name', 'wizards')
 ])
 
 warriors = dict([
@@ -61,7 +58,6 @@ warriors = dict([
 	("ball_image", "bball.png"),
 	("hand_location", [600, 300]),
 	('hand_image', "crying_jordan.png"),
-	('angle_offset', 0),
 	('bullet_offset', 10),
 	('bullet_image', "tears.png"),
 	('player_start', [300, 400]),
@@ -70,7 +66,7 @@ warriors = dict([
 	('box_offset', [0, 0]),
 	('background_scale', [800, 480]),
 	('catcher_offset', [0, 0]),
-	('name', 'nd')
+	('name', 'warriors')
 ])
 
 
