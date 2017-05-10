@@ -8,10 +8,8 @@ chicago = dict([
 	('bullet_offset', 10),
 	('bullet_image', "tears.png"),
 	('player_start', [300, 400]),
-	('box_offset', [0, 0]),
 	('max_player_left', 50),
 	('max_player_right', 600),
-	('catcher_offset', [0, 0]),
 	('background_scale', [800, 480]),
 	('name', 'chicago')
 ])
@@ -28,9 +26,7 @@ jersey = dict([
 	('player_start', [300, 400]),
 	('max_player_left', 50),
 	('max_player_right', 600),
-	('box_offset', [0, 0]),
 	('background_scale', [800, 480]),
-	('catcher_offset', [0, 0]),
 	('name', 'jersey')
 ])
 wizards = dict([
@@ -45,9 +41,7 @@ wizards = dict([
 	('player_start', [300, 400]),
 	('max_player_left', 50),
 	('max_player_right', 600),
-	('box_offset', [0, 0]),
 	('background_scale', [800, 480]),
-	('catcher_offset', [0, 0]),
 	('name', 'wizards')
 ])
 
@@ -63,9 +57,7 @@ warriors = dict([
 	('player_start', [300, 400]),
 	('max_player_left', 50),
 	('max_player_right', 600),
-	('box_offset', [0, 0]),
 	('background_scale', [800, 480]),
-	('catcher_offset', [0, 0]),
 	('name', 'warriors')
 ])
 
@@ -82,9 +74,7 @@ rockets = dict([
 	('player_start', [300, 400]),
 	('max_player_left', 50),
 	('max_player_right', 600),
-	('box_offset', [0, 0]),
 	('background_scale', [800, 480]),
-	('catcher_offset', [0, 0]),
 	('name', 'rockets')
 ])
 cavs = dict([
@@ -99,9 +89,7 @@ cavs = dict([
 	('player_start', [300, 400]),
 	('max_player_left', 50),
 	('max_player_right', 600),
-	('box_offset', [0, 0]),
 	('background_scale', [800, 480]),
-	('catcher_offset', [0, 0]),
 	('name', 'cavs')
 ])
 thunder = dict([
@@ -116,9 +104,7 @@ thunder = dict([
 	('player_start', [300, 400]),
 	('max_player_left', 50),
 	('max_player_right', 600),
-	('box_offset', [0, 0]),
 	('background_scale', [800, 480]),
-	('catcher_offset', [0, 0]),
 	('name', 'thunder')
 ])
 
@@ -134,9 +120,7 @@ spurs = dict([
 	('player_start', [300, 400]),
 	('max_player_left', 50),
 	('max_player_right', 600),
-	('box_offset', [0, 0]),
 	('background_scale', [800, 480]),
-	('catcher_offset', [0, 0]),
 	('name', 'spurs')
 ])
 backgrounds = [chicago, jersey, wizards, warriors, cavs, rockets, thunder, spurs]

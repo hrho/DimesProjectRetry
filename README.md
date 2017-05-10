@@ -1,7 +1,7 @@
 DimezFinalProject:
 =================
 
-From the Creators of 2016's Game of the Year, We Gon' Golfin'....
+From the Creators of 2016's Game of the Year, We Goin' Golfin'....
 
 Chris Rho(hrho) and Joey Curci(jcurci) proudly present our next immersive sports sim....
 
@@ -18,7 +18,6 @@ Only the greatest basketball teams of all time can stop him!
 Pick from a wide variety of ELITE basketball teams in order to stop Crying Jordan and avoid blowing a 3-1 Lead.
 
 
-
 How to Play:
 ==========
 
@@ -30,10 +29,10 @@ Player One controls the player at the bottom of the screen using the arrow keys.
 Each basketball adds 1 to your score, while each bomb subtracts 1 from your score.
 
 Player Two controls crying jordan.  Use the mouse to aim and fire at the basketballs.  Shoot down as many baseketballs as possible! Avoid shooting bombs though!
-Each basketball adds 1 to your score, while each bomb subtracts 1 from your score.
+Each basketball adds 1 to your score, while each bomb subtracts 2 from your score.
 
-The first player to get 10 basketballs is the winner!
-
+To balance the game for both players (after testing out the gameplay, it was deemed Player 2 was OP with the old setup),
+player 1 must get a score of 7 to win, while player 2 must get a score of 10 to win.
 
 Important Notes:
 ==============

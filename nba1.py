@@ -62,18 +62,18 @@ class GameSpace:
 		elif self.connected and self.team != None:
 			self.counter+=1
                         self.screen.blit(self.bg,(0,0))
-			for bullet in self.player2.lasers:
+			for bullet in self.player2.tears:
 				for ball in self.shot.drops:
 					if collision(ball.rect.center, bullet.rect.center):
 						self.shot.drops.remove(ball)
-						self.player2.lasers.remove(bullet)
+						self.player2.tears.remove(bullet)
                                                 if ball.val == 0:
 						    self.score2 += 1
                                                 else:
                                                     self.score2 -= 2
 						break
 			for ball in self.shot.drops:
-				if collision(ball.rect.center, [self.player1.rect.center[0] + self.team['catcher_offset'][0], self.player1.rect.center[1] + self.team['catcher_offset'][1]]):
+				if collision(ball.rect.center, [self.player1.rect.center[0], self.player1.rect.center[1]]):
 					self.shot.drops.remove(ball)
                                         if ball.val == 0:
                                             self.score1 += 1
@@ -98,8 +98,8 @@ class GameSpace:
 			self.shot.tick()
 			self.player1.tick()
 			self.player2.tick()
-			for laser in self.player2.lasers:
-				laser.tick()
+			for tear in self.player2.tears:
+				tear.tick()
 			if self.counted and self.counter%3 == 0:
 				shotx = []
                                 value = []
@@ -116,12 +116,11 @@ class GameSpace:
 			self.counted = True
 
 			#display game object
-                   #     self.bg.fill((0,0,0))
 			self.screen.blit(self.bg, (0,0))
 			self.screen.blit(self.player1.image, self.player1.rect)
-			# lasers
-			for laser in self.player2.lasers:
-				self.screen.blit(laser.image, laser.rect)
+			# tears
+			for tear in self.player2.tears:
+				self.screen.blit(tear.image, tear.rect)
 			self.screen.blit(self.player2.image, self.player2.rect)
 			# text display, theres only 1 font?
 			lt = pygame.font.Font('freesansbold.ttf', 70)
@@ -185,8 +184,8 @@ class Menu(pygame.sprite.Sprite):
                 self.thunderRect.center =[250,300]
                 self.spursRect.center = [450,300]
                 self.rocketsRect.center = [450,150]
-
 		self.circleCenter = None
+
 	def display(self):
 		mx, my = pygame.mouse.get_pos()
 		self.gs.screen.fill((0, 0, 0))
@@ -209,19 +208,14 @@ class Menu(pygame.sprite.Sprite):
 			pygame.draw.circle(self.gs.screen, (0, 255, 0), [self.jerseyRect.centerx, self.jerseyRect.centery], 50, 0)
                 elif dist(mx,my,self.warRect.centerx, self.warRect.centery)<25:
                         pygame.draw.circle(self.gs.screen, (0,255,0), [self.warRect.centerx, self.warRect.centery],50,0)
-
                 elif dist(mx,my,self.cavsRect.centerx, self.cavsRect.centery)<25:
                         pygame.draw.circle(self.gs.screen, (0,255,0), [self.cavsRect.centerx, self.cavsRect.centery],50,0)
-
                 elif dist(mx,my,self.thunderRect.centerx, self.thunderRect.centery)<25:
                         pygame.draw.circle(self.gs.screen, (0,255,0), [self.thunderRect.centerx, self.thunderRect.centery],50,0)
-
                 elif dist(mx,my,self.spursRect.centerx, self.spursRect.centery)<25:
                         pygame.draw.circle(self.gs.screen, (0,255,0), [self.spursRect.centerx, self.spursRect.centery],50,0)
-
                 elif dist(mx,my,self.rocketsRect.centerx, self.rocketsRect.centery)<25:
                         pygame.draw.circle(self.gs.screen, (0,255,0), [self.rocketsRect.centerx, self.rocketsRect.centery],50,0)
-
                 elif self.circleCenter != None:
 			pygame.draw.circle(self.gs.screen, self.color, self.circleCenter, 50, 0)
 		#display button
@@ -303,26 +297,8 @@ class Menu(pygame.sprite.Sprite):
                                         self.gs.setup()
                                         if self.gs.connected:
                                                 self.gs.write('rockets')
-# gameover boyy
-class GameOver(pygame.sprite.Sprite):
-	def __init__(self, gs = None):
-		self.gs = gs
-	def display(self, winner):
-		self.gs.screen.fill((0,0,0))
-		# player 1 winna
-		if winner == 1:
-			lt = pygame.font.Font('freesansbold.ttf', 30)
-                        TextS = lt.render("YOU ARE THE NBA CHAMPION", True, (255, 255, 255))
-		elif winner == 2:
-			lt = pygame.font.Font('freesansbold.ttf', 30)
-			TextS = lt.render("You blew a 3-1 lead", True, (255, 255, 255))
-		TextR = TextS.get_rect()
-		TextR.center = [320, 300]
-		self.gs.screen.blit(TextS, TextR)
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				self.gs.quit()
 
+# ball drops
 class Shot(pygame.sprite.Sprite):
 	def __init__(self, gs = None):
 		self.gs = gs
@@ -351,7 +327,7 @@ class Dropshots(pygame.sprite.Sprite):
 		self.gs = gs
 		self.image = pygame.image.load("images/bball.png")
 		self.rect = self.image.get_rect()
-		self.x = random.randint(30, 610)
+		self.x = random.randint(40, 600)
 		self.rect.center = [self.x, -20]
                 self.val = 0
 class DropBombs(pygame.sprite.Sprite):
@@ -360,7 +336,7 @@ class DropBombs(pygame.sprite.Sprite):
                 self.gs = gs
                 self.image = pygame.image.load("images/bomb.png")
                 self.rect = self.image.get_rect()
-                self.x = random.randint(30,610)
+                self.x = random.randint(40,600)
                 self.rect.center = [self.x,-20]
                 self.val = 1
 # Player 1
@@ -383,10 +359,10 @@ class Player1(pygame.sprite.Sprite):
 			self.box.rect = self.box.rect.move([-5, 0])
 		if self.rect.center[0] < self.gs.team['max_player_left']:
 			self.rect.center = [self.gs.team['max_player_left'], self.rect.center[1]]
-			self.box.rect.center = [self.rect.center[0] + self.gs.team['box_offset'][0], self.rect.center[1] + self.gs.team['box_offset'][1]]
+			self.box.rect.center = [self.rect.center[0], self.rect.center[1]]
 		elif self.rect.center[0] > self.gs.team['max_player_right']:
 			self.rect.center = [self.gs.team['max_player_right'], self.rect.center[1]]
-			self.box.rect.center = [self.rect.center[0] + self.gs.team['box_offset'][0], self.rect.center[1] + self.gs.team['box_offset'][1]]
+			self.box.rect.center = [self.rect.center[0], self.rect.center[1]]
 # the swatter
 class Player2(pygame.sprite.Sprite):
 	def __init__(self, gs = None):
@@ -397,15 +373,15 @@ class Player2(pygame.sprite.Sprite):
 		self.image = pygame.image.load("images/" + self.gs.team["hand_image"])
 		self.rect = self.image.get_rect()
 		self.rect.center = self.gs.team['hand_location']
-		self.lasers = []
+		self.tears = []
 		self.angle = 0
 		self.orig_image = self.image
 	def tick(self):
-		for ball in self.lasers:
+		for ball in self.tears:
 			if ball.rect.center[0] < -20 or ball.rect.center[0] > 660:
-				self.lasers.remove(ball)
+				self.tears.remove(ball)
 			elif ball.rect.center[1] < -20 or ball.rect.center[1] > 500:
-				self.lasers.remove(ball)
+				self.tears.remove(ball)
 		# player 2 rotates
 		self.angle = math.atan2(self.my-self.rect.center[1], self.mx - self.rect.center[0])*-180/math.pi + 211.5
 		self.image = pygame.transform.rotate(self.orig_image, self.angle)
@@ -418,11 +394,11 @@ class Box(pygame.sprite.Sprite):
 		self.gs = gs
 		self.image = pygame.image.load("images/" + self.gs.team['box_image'])
 		self.rect = self.image.get_rect()
-		self.x = center[0] + self.gs.team['box_offset'][0]
-		self.y = center[1] + self.gs.team['box_offset'][1]
+		self.x = center[0]
+		self.y = center[1]
 		self.rect.center = [self.x, self.y]
 
-class Laser(pygame.sprite.Sprite):
+class Tear(pygame.sprite.Sprite):
 	def __init__(self, x, y, xm, ym, gs = None):
 		pygame.sprite.Sprite.__init__(self)
 		self.xm = xm
@@ -433,6 +409,27 @@ class Laser(pygame.sprite.Sprite):
 		self.rect.center = [x,y]
 	def tick(self):
 		self.rect = self.rect.move([self.xm, self.ym])
+
+# game over boyyy
+class GameOver(pygame.sprite.Sprite):
+	def __init__(self, gs = None):
+		self.gs = gs
+	def display(self, winner):
+		self.gs.screen.fill((0,0,0))
+		# player 1 winna
+		if winner == 1:
+			lt = pygame.font.Font('freesansbold.ttf', 30)
+                        TextS = lt.render("YOU ARE THE NBA CHAMPION", True, (255, 255, 255))
+		elif winner == 2:
+			lt = pygame.font.Font('freesansbold.ttf', 30)
+			TextS = lt.render("You blew a 3-1 lead", True, (255, 255, 255))
+		TextR = TextS.get_rect()
+		TextR.center = [320, 300]
+		self.gs.screen.blit(TextS, TextR)
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				self.gs.quit()
+
 # distance
 def dist(x1, y1, x2, y2):
 	return ((y2-y1)**2 + (x2-x1)**2)**.5
@@ -456,7 +453,7 @@ class ServerConnection(Protocol):
 			if self.client.team != None:
 				self.transport.write(self.client.team['name'])
 		else:
-			self.client.player2.lasers = []
+			self.client.player2.tears = []
 			data = pickle.loads(zlib.decompress(data))
 			# player 2's rotatos
 			self.client.player2.mx = data[0]
@@ -465,10 +462,10 @@ class ServerConnection(Protocol):
 			data[3] = pickle.loads(data[3])
 			data[4] = pickle.loads(data[4])
 			data[5] = pickle.loads(data[5])
-			#sync laser
+			#sync tear
 			i = 0
 			for x in data[2]:
-				self.client.player2.lasers.append(Laser(data[2][i], data[3][i], data[4][i], data[5][i], self.client))
+				self.client.player2.tears.append(Tear(data[2][i], data[3][i], data[4][i], data[5][i], self.client))
 				i += 1
 	def connectionLost(self, reason):
 		reactor.stop()
@@ -476,6 +473,7 @@ class ServerConnection(Protocol):
 		self.transport.write(data)
 	def quit(self):
 		self.transport.loseConnection()
+
 class ServerConnectionFactory(Factory):
 	def __init__(self, client):
 		self.client = client
