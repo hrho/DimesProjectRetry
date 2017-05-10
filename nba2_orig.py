@@ -16,11 +16,9 @@ from twisted.internet import reactor
 from twisted.internet.defer import DeferredQueue
 from twisted.internet.task import LoopingCall 
 
-SERVER_HOST = 'ash.campus.nd.edu'
-#SERVER_HOST = 'newt.campus.nd.edu'
+#SERVER_HOST = 'ash.campus.nd.edu'
+SERVER_HOST = 'newt.campus.nd.edu'
 SERVER_PORT = 40053
-
-#hello
 
 class GameSpace:
 	def __init__(self):
@@ -38,7 +36,7 @@ class GameSpace:
 		self.team = None
 		# waiting bg screen
 		tempbg = backgrounds[random.randint(0,1)]
-		self.bg = pygame.image.load("images/kitty.jpg")
+		self.bg = pygame.image.load("images/" + tempbg['background_image'])
 		self.bg = pygame.transform.scale(self.bg, tempbg['background_scale'])
 		self.gameOver = 0
 	def setup(self):
@@ -55,7 +53,7 @@ class GameSpace:
 		self.bg = pygame.transform.scale(self.bg, self.team['background_scale'])
 	def game_loop(self):
 		if self.gameOver == 1:
-			if self.score1 >= 7:
+			if self.score1 > 15:
 				self.endGame.display(1)
 			else:
 				self.endGame.display(2)
@@ -78,7 +76,7 @@ class GameSpace:
 			self.tickNum += 1
 			for laser in self.player2.lasers:
 				laser.tick()
-			if self.counted == 1 and self.tickNum%2 == 0:
+			if self.counted == 1 and self.tickNum%3 == 0:
 				laserListx = []
 				laserListy = []
 				laserListxm = []
@@ -120,7 +118,7 @@ class GameSpace:
 				self.screen.blit(ball.image, ball.rect)
 			pygame.display.flip()
 			# end of kobe's game
-			if self.score1 >= 7 or self.score2 >= 10:
+			if self.score1 > 15 or self.score2 > 15:
 				self.gameOver = 1
                         pygame.display.update()
 		else:
@@ -171,15 +169,6 @@ class Dropshots(pygame.sprite.Sprite):
 		self.image = pygame.image.load("images/" + self.gs.team['ball_image'])
 		self.rect = self.image.get_rect()
 		self.rect.center = [x, y]
-
-class Dropbombs(pygame.sprite.Sprite):
-        def __init__(self, x, y,gs = None):
-                pygame.sprite.Sprite.__init__(self)
-                self.gs = gs
-                self.image = pygame.image.load("images/bomb.png")
-                self.rect = self.image.get_rect()
-                self.rect.center = [x,y]
-
 # Player 1
 class Player1(pygame.sprite.Sprite):
 	def __init__(self, gs = None):
@@ -192,6 +181,18 @@ class Player1(pygame.sprite.Sprite):
                 self.box = Box(self.rect.center, self.gs)
         def tick(self):
             pass
+
+# catching balls lol
+class Box(pygame.sprite.Sprite):
+	def __init__(self, center, gs = None):
+		pygame.sprite.Sprite.__init__(self)
+		self.gs = gs
+		self.image = pygame.image.load("images/" + self.gs.team['box_image'])
+		self.rect = self.image.get_rect()
+		self.x = center[0] + self.gs.team['box_offset'][0]
+		self.y = center[1] + self.gs.team['box_offset'][1]
+		self.rect.center = [self.x, self.y]
+
 # the swatter
 class Player2(pygame.sprite.Sprite):
 	def __init__(self, gs = None):
@@ -230,16 +231,6 @@ class Player2(pygame.sprite.Sprite):
 			self.image = pygame.transform.rotate(self.orig_image, self.angle)
 			self.rect = self.image.get_rect(center = self.rect.center)
 			self.toFire = 0
-# catching balls lol
-class Box(pygame.sprite.Sprite):
-	def __init__(self, center, gs = None):
-		pygame.sprite.Sprite.__init__(self)
-		self.gs = gs
-		self.image = pygame.image.load("images/" + self.gs.team['box_image'])
-		self.rect = self.image.get_rect()
-		self.x = center[0] + self.gs.team['box_offset'][0]
-		self.y = center[1] + self.gs.team['box_offset'][1]
-		self.rect.center = [self.x, self.y]
 
 class Laser(pygame.sprite.Sprite):
 	def __init__(self, xc=320, yc=240, xm=1, ym=1, gs = None):
@@ -260,7 +251,7 @@ def dist(x1, y1, x2, y2):
 
 def collision(ball_center, bullet_center):
 	distance = dist(ball_center[0], ball_center[1], bullet_center[0], bullet_center[1])
-	if distance <= 30:
+	if distance <= 50:
 		return True
 	else:
 		return False
@@ -316,20 +307,10 @@ class ClientConnection(Protocol):
 			self.client.shot.drops = []
 			shotx = pickle.loads(data[3])
 			shoty = pickle.loads(data[4])
-                        try:
-                            val = pickle.loads(data[6])
-                        except Exception as err:
-                            pass
-                        i = 0
+			i = 0
 			for x in shotx:
-                            try:
-                                if val[i] == 0:
-				    self.client.shot.drops.append(Dropshots(x, shoty[i], self.client))
-                                else:
-                                    self.client.shot.drops.append(Dropbombs(x,shoty[i],self.client))
-                                i += 1
-                            except Exception as err:
-                                print err
+				self.client.shot.drops.append(Dropshots(x, shoty[i], self.client))
+				i += 1
 			# p2 score
 			self.client.score2 = data[5]
 	def connectionMade(self):

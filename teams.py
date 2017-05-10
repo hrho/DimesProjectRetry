@@ -24,7 +24,7 @@ jersey = dict([
 	("hand_location", [600, 300]),
 	('hand_image', "crying_jordan.png"),
 	('bullet_offset', 10),
-	('bullet_image', "L.png"),
+	('bullet_image', "tears.png"),
 	('player_start', [300, 400]),
 	('max_player_left', 50),
 	('max_player_right', 600),
