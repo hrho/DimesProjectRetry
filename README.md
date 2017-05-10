@@ -33,7 +33,7 @@ How to Play:
 	- Player One controls the player at the bottom of the screen using the arrow keys.  Try and catch as many basketballs as possible! Avoid catching bombs though! 
 	Each basketball adds 1 to your score, while each bomb subtracts 1 from your score.
 
-	- Player Two controls crying jordan.  Use the mouse to aim and fire tears at the basketballs.  Shoot down as many baseketballs as possible! Avoid shooting bombs though! 
+	- Player Two controls crying jordan.  Use the mouse to aim and fire tears at the basketballs. You can only shoot one tear at a time on the screen! Go for combo shots. Shoot down as many basketballs as possible! Avoid shooting bombs though! 
 	Each basketball adds 1 to your score, while each bomb subtracts 2 from your score.
 
 	- To balance the game for both players (after testing out the gameplay, it was deemed Player 2 was OP with the old setup),
