@@ -118,7 +118,7 @@ class GameSpace:
 			#display game object
 			self.screen.blit(self.bg, (0,0))
 			self.screen.blit(self.player1.image, self.player1.rect)
-			# tears
+			# show tears
 			for tear in self.player2.tears:
 				self.screen.blit(tear.image, tear.rect)
 			self.screen.blit(self.player2.image, self.player2.rect)
@@ -383,7 +383,7 @@ class Player2(pygame.sprite.Sprite):
 			elif ball.rect.center[1] < -20 or ball.rect.center[1] > 500:
 				self.tears.remove(ball)
 		# player 2 rotates
-		self.angle = math.atan2(self.my-self.rect.center[1], self.mx - self.rect.center[0])*-180/math.pi + 211.5
+		self.angle = math.atan2(self.my-self.rect.center[1], self.mx - self.rect.center[0])*-180/math.pi + 200
 		self.image = pygame.transform.rotate(self.orig_image, self.angle)
 		self.rect = self.image.get_rect(center = self.rect.center)
 
